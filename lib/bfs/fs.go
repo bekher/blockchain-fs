@@ -26,6 +26,8 @@ type Head struct {
 	Replica uint64
 }
 
+var debug = false
+
 var root *DNode
 var nextInd uint64 = 1
 
@@ -87,7 +89,7 @@ func pErr(s string, args ...interface{}) {
 	os.Exit(1)
 }
 
-func pOut(s string, args ...interface{}) {
+func p_out(s string, args ...interface{}) {
 	if !debug {
 		return
 	}
@@ -95,7 +97,7 @@ func pOut(s string, args ...interface{}) {
 }
 
 // FS funcs
-type (FS) Root() (fs.Node, error) {
+func (fs FS) Root() (fs.Node, error) {
   p_out("root returns as %d\n", int(root.Attrs.Inode))
   return root, nil
 }

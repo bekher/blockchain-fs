@@ -25,7 +25,7 @@ func (Dfs) Root() (n fs.Node, err error) {
 
 func (n *DNode) init(name string, fmode os.FileMode) {
 	n.Name = name
-	n.kids = make(map[string]*DNode)
+	n.children = make(map[string]*DNode)
 	n.Attrs = fuse.Attr{
 		Inode: getNextInode(),
 		Mode:  fmode,
