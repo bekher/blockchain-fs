@@ -8,7 +8,6 @@ import (
 	"bazil.org/fuse/fs"
 )
 
-
 type DNode struct {
 	Name    string
 	Attrs   fuse.Attr
@@ -26,8 +25,6 @@ type Head struct {
 	Replica uint64
 }
 
-var debug = false
-
 var root *DNode
 var nextInd uint64 = 1
 
@@ -39,13 +36,13 @@ type FS struct{}
 func Init(debug bool, mountPoint string, acct string) {
 	//nodeID := uint64(rand.Int63())
 	if err := os.MkdirAll(mountPoint, 0755); err != nil {
-		pErr("mount pt creation fail\n")
+		p_err("mount pt creation fail\n")
 	}
 
 	fuse.Unmount(mountPoint)
 
-	var c *fuse.Conn = nil
-	var err error = nil
+	var c *fuse.Conn
+	var err error
 
 	c, err = fuse.Mount(mountPoint)
 
@@ -64,9 +61,9 @@ func Init(debug bool, mountPoint string, acct string) {
 	// check if the mount process has an error to report
 	<-c.Ready
 
-  if err := c.MountError; err != nil {
-    log.Fatal(err)
-  }
+	if err := c.MountError; err != nil {
+		log.Fatal(err)
+	}
 }
 
 // semaphore stuff
@@ -84,20 +81,8 @@ func getHead(acct string) (*Head, uint64) {
 	return nil, 0
 }
 
-func pErr(s string, args ...interface{}) {
-	log.Printf(s, args...)
-	os.Exit(1)
-}
-
-func p_out(s string, args ...interface{}) {
-	if !debug {
-		return
-	}
-	log.Printf(s, args...)
-}
-
 // FS funcs
 func (fs FS) Root() (fs.Node, error) {
-  p_out("root returns as %d\n", int(root.Attrs.Inode))
-  return root, nil
+	p_out("root returns as %d\n", int(root.Attrs.Inode))
+	return root, nil
 }

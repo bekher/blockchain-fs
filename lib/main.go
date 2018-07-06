@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Printf("EVM FS Initializing")
+	fmt.Printf("EVM filesystem initializing...")
 	bfs.Init(true, "testdir", "todo get acct")
 }
